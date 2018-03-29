@@ -21,10 +21,11 @@ with open(FILENAME, 'rb') as f:
 stim = data['stim']
 rho = data['rho']
 
-
 # Fill in these values
-sampling_period = # in ms
-num_timesteps = 
+sampling_period = 2# in ms
+num_timesteps = 150
+spike_times = rho[num_timesteps:].nonzero()[0] + num_timesteps
+
 
 sta = compute_sta(stim, rho, num_timesteps)
 
