@@ -16,7 +16,7 @@ I = 10 # nA
 
 # capacitance and leak resistance
 
-C = 0.01 # nF
+C = 0.1 # nF
 R = 100# M ohms
 tau = R*C # = 0.1*100 nF-Mohms = 100*100 pF Mohms = 10 ms
 print('C = %.3f nF' % C)
