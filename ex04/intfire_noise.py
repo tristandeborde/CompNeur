@@ -23,13 +23,13 @@ R = 40 # M ohms
 # Using h = 1 ms step size, Euler method
 
 V = 0
-tstop = 200
+tstop = 200 * 2
 abs_ref = 5 # absolute refractory period 
 ref = 0 # absolute refractory period counter
 V_th = 10 # spike threshold
 
 # input current
-for noiseamp in np.arange(1, 10, 1)
+for noiseamp in np.arange(1, 6, 0.5):
     V_trace = []  # voltage trace for plotting
     spiketimes = [] # list of spike times
     I += noiseamp*np.random.normal(0, 1, (tstop,)) # nA; Gaussian noise
@@ -42,9 +42,12 @@ for noiseamp in np.arange(1, 10, 1)
        if V > V_th:
            V = 50 # emit spike
            ref = abs_ref # set refractory counter
-           spiketimes += t
+           spiketimes.append(t)
        V_trace += [V]
-
-
-plt.plot(V_trace)
+    spiketimes = list(np.diff(spiketimes))
+    a, b = np.histogram(spiketimes,density=True, bins=range(100))
+    plt.plot(b[:-1], a, label=noiseamp)
+plt.xlabel('Length of interspike interval in ms')
+plt.ylabel('Frequency')
+plt.legend();
 plt.show()
