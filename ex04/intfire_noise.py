@@ -27,9 +27,9 @@ tstop = 200 * 2
 abs_ref = 5 # absolute refractory period 
 ref = 0 # absolute refractory period counter
 V_th = 10 # spike threshold
-
+spike_list = []
 # input current
-for noiseamp in np.arange(1, 6, 0.5):
+for noiseamp in np.arange(1, 6, 1):
     V_trace = []  # voltage trace for plotting
     spiketimes = [] # list of spike times
     I += noiseamp*np.random.normal(0, 1, (tstop,)) # nA; Gaussian noise
@@ -45,9 +45,10 @@ for noiseamp in np.arange(1, 6, 0.5):
            spiketimes.append(t)
        V_trace += [V]
     spiketimes = list(np.diff(spiketimes))
-    a, b = np.histogram(spiketimes,density=True, bins=range(100))
-    plt.plot(b[:-1], a, label=noiseamp)
+    spike_list.append(spiketimes)
+
+[a, b, c] = plt.hist(spike_list)
+plt.legend(c, ["1","2","3","4", "5"], loc=1)
 plt.xlabel('Length of interspike interval in ms')
 plt.ylabel('Frequency')
-plt.legend();
 plt.show()
